@@ -10,6 +10,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        # هنا نخبر جيت هب بالدخول تلقائياً إلى مجلد مشروعك المرفوع.
+        # إذا كان اسم مجلد مشروعك مختلفاً عن "my_awesome_app"، استبدله بالاسم الصحيح المكتوب في جيت هب.
+        working-directory: ./my_awesome_app
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -35,4 +41,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: release-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: my_awesome_app/build/app/outputs/flutter-apk/app-release.apk
