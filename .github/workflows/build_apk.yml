@@ -12,8 +12,6 @@ jobs:
 
     defaults:
       run:
-        # هنا نخبر جيت هب بالدخول تلقائياً إلى مجلد مشروعك المرفوع.
-        # إذا كان اسم مجلد مشروعك مختلفاً عن "my_awesome_app"، استبدله بالاسم الصحيح المكتوب في جيت هب.
         working-directory: ./my_awesome_app
 
     steps:
@@ -30,6 +28,14 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
+
+      # خطوة هامة: تنظيف ملف الـ gradle.properties من أي مسارات جافا محلية تعوق البناء السحابي
+      - name: Clean local Java Home property
+        run: |
+          if [ -f gradle.properties ]; then
+            sed -i '/org.gradle.java.home/d' gradle.properties
+          fi
+        working-directory: ./my_awesome_app/android
 
       - name: Get dependencies
         run: flutter pub get
